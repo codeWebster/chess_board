@@ -2,6 +2,8 @@ package service;
 
 import Player.Player;
 import board.Board;
+import pieceMoveValidator.PieceMoveValidator;
+import pieceMoveValidator.PieceMoveValidatorFactory;
 import places.Piece;
 
 public class ChessService {
@@ -10,11 +12,22 @@ public class ChessService {
     public ChessService(Board board) {
         this.board = board;
     }
+    private Boolean validateMove(Piece piece, Player player, int rowStart, int colStart, int rowEnd, int colEnd){
+        if(player != piece.getPlayer()){
+            return false;
+        }
+        PieceMoveValidatorFactory pieceMoveValidatorFactory = new PieceMoveValidatorFactory();
+        PieceMoveValidator pieceMoveValidator = pieceMoveValidatorFactory.createPieceMoveValidator(piece);
+        return pieceMoveValidator.pathValidator(board, rowStart, colStart, rowEnd, colEnd);
+    }
     public void movePiece(Piece piece, Player player, int rowStart, int colStart, int rowEnd, int colEnd){
-        if(!piece.validateMove(board, player,  rowStart,  colStart,  rowEnd,  colEnd )){
+
+        if(!validateMove(piece, player, rowStart, colStart, rowEnd, colEnd)){
             System.out.println("Invalid Move");
             return;
         }
+
+        //
         if(!board.checkIfEmpty(rowEnd,colEnd)){
             System.out.println(rowEnd + " " + colEnd);
             System.out.println(board.getPiece(rowEnd,colEnd).getClass() + " Killed");

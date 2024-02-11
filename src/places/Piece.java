@@ -3,19 +3,17 @@ package places;
 import Player.Player;
 import board.Board;
 
-public abstract class Piece {
+public class Piece {
     private Player player;
-
-    public Piece (Player player){
-        this.player = player;
+    pieceType pieceType;
+    public Player getPlayer() {
+        return player;
     }
-
-    abstract Boolean validatePath(Board board, int rowStart, int colStart, int rowEnd, int colEnd);
-    public Boolean validateMove(Board board, Player player, int rowStart, int colStart, int rowEnd, int colEnd){
-        if(player != this.player){
-            return false;
-        }
-        return validatePath(board, rowStart,rowEnd, rowEnd, colEnd);
-
+    public pieceType getPieceType() {
+        return pieceType;
+    }
+    public Piece(Player player, places.pieceType pieceType) {
+        this.player = player;
+        this.pieceType = pieceType;
     }
 }

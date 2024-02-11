@@ -1,17 +1,12 @@
-package places;
+package pieceMoveValidator;
 
-import Player.Player;
 import board.Board;
 import pathValidators.PathValidator;
 import pathValidators.StraightPathValidator;
 
-public class Rook extends Piece {
-    public Rook(Player player) {
-        super(player);
-    }
-
+public class RookMoveValidator implements PieceMoveValidator{
     @Override
-    Boolean validatePath(Board board, int rowStart, int colStart, int rowEnd, int colEnd) {
+    public Boolean pathValidator(Board board, int rowStart, int colStart, int rowEnd, int colEnd) {
         PathValidator pathValidator = new StraightPathValidator();
         return pathValidator.pathValidate(board, rowStart, colStart, rowEnd, colEnd );
     }
